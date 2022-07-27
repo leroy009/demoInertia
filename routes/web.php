@@ -16,16 +16,36 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Home');
 });
+
+Route::get('/users', function () {
+    sleep(2);
+    return Inertia::render('Users');
+});
+
+Route::get('/settings', function () {
+    return Inertia::render('Settings');
+});
+
+
+
+Route::post('/posttest', function () {
+    dd(request('name'));
+
+    //return Inertia::render('Settings');
+});
+
+
+
+
+
+
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
