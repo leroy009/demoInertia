@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,7 +21,11 @@ Route::get('/', function () {
 });
 
 Route::get('/users', function () {
-    return Inertia::render('Users', ['time' => now()->toTimeString()]);
+    return Inertia::render('Users', [
+        'users' => User::all()->map(fn ($user) => [
+            'name' => $user->name
+        ])
+    ]);
 });
 
 Route::get('/settings', function () {
