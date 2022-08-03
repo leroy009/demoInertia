@@ -8,14 +8,7 @@
 
 </script>
 
-// Add a second script tag and export the layout
-<script>
-export default { layout: Layout }
-</script>
-
 <template>
-    <!-- <Layout> -->
-
         <h1 class="text-3xl font-bold">Users</h1>
 
 
@@ -24,6 +17,5 @@ export default { layout: Layout }
 
             <Link href="/users" class="text-blue-500" preserve-scroll >Refresh</Link>
         </div>
-    <!-- </Layout>  -->
 </template>
 
