@@ -1,8 +1,8 @@
 <script setup>
     import Layout from '../shared/Layout.vue';
-    import {Link} from "@inertiajs/inertia-vue3";
+    // import {Link} from "@inertiajs/inertia-vue3";
 
-    const props = defineProps({
+    defineProps({
         time: String,
     });
 
