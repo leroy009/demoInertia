@@ -2,6 +2,11 @@
     import { reactive } from 'vue';
     import { Inertia } from '@inertiajs/inertia'
 
+    //for validation
+    defineProps({
+        errors: Object
+    });
+
     let form = reactive({
         name: '',
         email: '',
@@ -33,6 +38,9 @@
                 id="name"
                 required
             >
+            <!-- simalar ways of validation -->
+            <div v-if="$page.props.errors.name" v-text="$page.props.errors.name" class="text-red-500 text-xs mt-1"></div>
+            <div v-if="errors.name" v-text="errors.name" class="text-red-500 text-xs mt-1"></div>
         </div>
 
         <div class="mb-6">
@@ -48,6 +56,7 @@
                 id="email"
                 required
             >
+            <div v-if="errors.email" v-text="errors.email" class="text-red-500 text-xs mt-1"></div>
         </div>
 
         <div class="mb-6">
@@ -63,6 +72,7 @@
                 id="password"
                 required
             >
+            <div v-if="errors.password" v-text="errors.password" class="text-red-500 text-xs mt-1"></div>
         </div>
 
         <div class="mb-6">            
