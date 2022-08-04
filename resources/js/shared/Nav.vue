@@ -22,6 +22,10 @@
       </li>
 
       <li>
+        <NavLink href="/users/create" :active="$page.component === 'Users'" >Create Users</NavLink>        
+      </li>
+
+      <li>
         <NavLink href="/settings" :active="$page.component === 'Settings'" >Settings</NavLink>        
       </li>
 
