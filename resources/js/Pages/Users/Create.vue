@@ -1,20 +1,37 @@
 <script setup>
-    import { reactive } from 'vue';
-    import { Inertia } from '@inertiajs/inertia'
+    // import { reactive, ref } from 'vue';
+    // import { Inertia } from '@inertiajs/inertia'
+    import { useForm } from '@inertiajs/inertia-vue3';
 
     //for validation
-    defineProps({
-        errors: Object
-    });
+    // defineProps({
+    //     errors: Object
+    // }); we are using form.errors now. //useForm
 
-    let form = reactive({
+    //Form 
+    //We want to use Inertias form helper. This does work4
+    // let form = reactive({ name: '', email: '', password: '', });
+
+    let form = useForm({
         name: '',
         email: '',
         password: '',
     });
 
+    //Form Helper
+    //let processing = ref(false); // we using form.processing now //useForm
+
+    //Sending form data
     let submit = () => {
-        Inertia.post('/users', form);
+        // Inertia.post('/users', form); //This works but now we need form helpers belo
+        // processing things. 
+        // Inertia.post('/users', form, {
+        //     onStart: () => { processing.value = true },
+        //     onFinish: () => { processing.value = false },
+        // });
+        // We no longer need onStart and onFinish because we using //useForm
+        //Inertia form helper
+        form.post('/users');
     };
 </script>
 
@@ -40,7 +57,8 @@
             >
             <!-- simalar ways of validation -->
             <div v-if="$page.props.errors.name" v-text="$page.props.errors.name" class="text-red-500 text-xs mt-1"></div>
-            <div v-if="errors.name" v-text="errors.name" class="text-red-500 text-xs mt-1"></div>
+            <!-- <div v-if="errors.name" v-text="errors.name" class="text-red-500 text-xs mt-1"></div>  we are using form.errors now. //useForm -->
+            <div v-if="form.errors.name" v-text="form.errors.name" class="text-red-500 text-xs mt-1"></div>
         </div>
 
         <div class="mb-6">
@@ -56,7 +74,7 @@
                 id="email"
                 required
             >
-            <div v-if="errors.email" v-text="errors.email" class="text-red-500 text-xs mt-1"></div>
+            <div v-if="form.errors.email" v-text="form.errors.email" class="text-red-500 text-xs mt-1"></div>
         </div>
 
         <div class="mb-6">
@@ -72,12 +90,13 @@
                 id="password"
                 required
             >
-            <div v-if="errors.password" v-text="errors.password" class="text-red-500 text-xs mt-1"></div>
+            <div v-if="form.errors.password" v-text="form.errors.password" class="text-red-500 text-xs mt-1"></div>
         </div>
 
         <div class="mb-6">            
             <button class="bg-blue-400 rounded py-2 px-4 hover:bg-blue-500"
-                type="submit"            
+                type="submit"  
+                :disabled="form.processing"          
             >
             Submit </button>
         </div>
