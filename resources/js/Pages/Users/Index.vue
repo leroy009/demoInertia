@@ -3,6 +3,8 @@
 import { ref, watch } from 'vue';
 import Pagination from '../../shared/Pagination.vue'
 import { Inertia } from '@inertiajs/inertia';
+import throttle from "lodash/throttle";
+import debounce from "lodash/debounce";
 
 let props = defineProps({
     // users: Array,
@@ -12,12 +14,13 @@ let props = defineProps({
 
 let search = ref(props.filters.search);
 
-watch(search, value => {
-    Inertia.get('/users', {search: value}, {
-        preserveState: true,
-        replace: true
-    })
-});
+// watch(search, throttle(function (value) {
+//     Inertia.get('/users', {search: value}, { preserveState: true, replace: true });
+// }), 500); //Trigger this function after 500ms, do things while they are typing
+
+watch(search, debounce(function (value) {
+    Inertia.get('/users', {search: value}, { preserveState: true, replace: true });
+}), 500); //Trigger this function once after 500ms when nothing is happening here. So wait for typing to finish
 </script>
 
 <template>
